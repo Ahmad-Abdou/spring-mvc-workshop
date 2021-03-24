@@ -7,12 +7,61 @@
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <meta charset="UTF-8">
     <title>productManagement</title>
+
+    <style >
+        body{
+            margin: 60px 10px;
+        }
+
+    </style>
 </head>
 <body>
 <header>
     <nav th:insert="fragments/nav :: nav_fragment"></nav>
 </header>
-<footer th:insert="fragments/footer :: footer_fragment"></footer>
+
+<div class="container ">
+    <div class="card">
+        <div class="container p-5 bg-info">
+        <h1 class=" text-white text-center border border-white rounded-pill p-3">Product List</h1>
+        <div class="card-body btn btn-primary mt-5 ">Add product</div>
+        </div>
+        <div class="card-footer">
+            <div class="p-5" th:if="${productDtoList.isEmpty()}">
+               <h3>No product Available</h3>
+            </div>
+            <div th:unless="${productDtoList.isEmpty()}">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody th:each="productDto: ${productDtoList}">
+                <tr>
+                    <td th:text="${productDto.id}"></td>
+                    <td th:text="${productDto.name}"></td>
+                    <td th:text="${productDto.price}"></td>
+                    <td><a href="#" class="btn btn-info" th:href="@{/admin/product/find/{id} (id=${productDto.id})} ">Details</a></td>
+                    <td><a href="#" class="btn btn-warning">Edit</a></td>
+                    <td><a href="#" class="btn btn-danger">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<footer class="bg-dark p-4 fixed-bottom text-white text-center " th:insert="fragments/footer :: footer_fragment">
+</footer>
 
 </body>
 </html>
